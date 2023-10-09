@@ -1,4 +1,4 @@
 OpenMugen
 =========
 
-开源拳皇代码
+Open source King of Fighters code

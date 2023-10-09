@@ -20,3 +20,11 @@ Debug
 BIN
 OBJ
 log.txt
+/CMakeCache.txt
+/cmake_install.cmake
+/CMakeFiles/
+cmake-build-debug
+Makefile
+/OpenMugen
+
+.idea
