@@ -73,7 +73,7 @@ void CStateParser::ParseStateFile(const char* strFileName,CStateManager &StateMa
 
 				char strStateInfo[100];
 				tok.GetToken(strStateInfo, 99);
-				// ¼ÓÈë×´Ì¬
+				// ï¿½ï¿½ï¿½ï¿½×´Ì¬
 				StateManager.AddState(stateNum,strStateInfo);
 
 				//Skip useless stuff
@@ -343,7 +343,7 @@ void CStateParser::ParseStateDef(CTokenizer &tok,CStateManager &StateManager)
 
 void CStateParser::PareseState(CTokenizer &tok,CStateManager &StateManager)
 {
-	// ÔÝÊ±Ö§³ÖÈýÌõtirgger£¬²»Ö§³Ötriggerall 
+	// ï¿½ï¿½Ê±Ö§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½tirggerï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½triggerall 
 	while( !tok.CheckToken("[",false) && !tok.AtEndOfFile() )
 	{
 		if( tok.CheckToken("type") )
@@ -370,7 +370,7 @@ void CStateParser::PareseState(CTokenizer &tok,CStateManager &StateManager)
 
 			PrintMessage("trigger1");
 			ParseTrigger(tok,StateManager);
-			// ½«stateManagerÖÐµÄpInstÒÆµ½lpStateDefList->lpState->triggers
+			// ï¿½ï¿½stateManagerï¿½Ðµï¿½pInstï¿½Æµï¿½lpStateDefList->lpState->triggers
 			StateManager.AddTriggerToState(nController);
 		}else  if( tok.CheckToken("trigger2") )        
 		{
@@ -378,7 +378,7 @@ void CStateParser::PareseState(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);
 
 			ParseTrigger(tok,StateManager);
-			// ½«stateManagerÖÐµÄpInstÒÆµ½lpStateDefList->lpState->triggers
+			// ï¿½ï¿½stateManagerï¿½Ðµï¿½pInstï¿½Æµï¿½lpStateDefList->lpState->triggers
 			StateManager.AddTriggerToState(nController);
 		}else  if( tok.CheckToken("trigger3") )        
 		{
@@ -386,7 +386,7 @@ void CStateParser::PareseState(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);
 
 			ParseTrigger(tok,StateManager);
-			// ½«stateManagerÖÐµÄpInstÒÆµ½lpStateDefList->lpState->triggers
+			// ï¿½ï¿½stateManagerï¿½Ðµï¿½pInstï¿½Æµï¿½lpStateDefList->lpState->triggers
 			StateManager.AddTriggerToState(nController);
 		}else break;
 
@@ -401,7 +401,7 @@ void CStateParser::ParseTrigger(CTokenizer &tok,CStateManager &StateManager)
 	tok.SetReturnNegativeSeperatelyFromNumber(true);
 	EvaluateExpression(tok,StateManager);
 	tok.SetReturnNegativeSeperatelyFromNumber(false);
-	// ¼ÓÈëOP_STOP
+	// ï¿½ï¿½ï¿½ï¿½OP_STOP
 	StateManager.AddInstruction(OP_STOP,0,"OP_STOP");
 
 }
@@ -662,7 +662,7 @@ void CStateParser::Term(CTokenizer &tok,CStateManager &StateManager)
 		{
 			//evaluate first expression                   
 			EvaluateExpression(tok,StateManager);
-			// TODO£º´¦Àíconst(expr)
+			// TODOï¿½ï¿½ï¿½ï¿½ï¿½ï¿½const(expr)
 			//intervall op =(,)
 			if( !tok.CheckToken(")") )
 			{
@@ -727,7 +727,7 @@ int CStateParser::GetControllerType(const char * strType,CTokenizer &tok)
 	int i=0;
 	while(strControllerTypes[i])
 	{
-		if(strcmpi(strType,strControllerTypes[i]) == 0)
+		if(strcasecmp(strType,strControllerTypes[i]) == 0)
 			return i;       
 
 		i++;
@@ -743,14 +743,14 @@ int CStateParser::GetTriggerType(const char * strTrigger,CTokenizer &tok)
 	int i=0;
 	while(strTriggerType[i])
 	{
-		if(strcmpi(strTrigger,strTriggerType[i]) == 0)
+		if(strcasecmp(strTrigger,strTriggerType[i]) == 0)
 			return i;
 
 
 		i++;   
 
 	}
-	//TODO:ÕÒ²»µ½µÄÊÇÒª±»Ìæ»»µÄ
+	//TODO:ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½æ»»ï¿½ï¿½
 	//Error(strTrigger,tok);
 
 	return -1;
@@ -786,7 +786,7 @@ void CStateParser::ParserController(CTokenizer &tok,CStateManager &StateManager,
 
 bool CStateParser::ParseStateBaseParm(CTokenizer &tok,CStateManager &StateManager)
 {
-	// »ù±¾µÄ½âÎöpersistent" and "ignorehitpause"
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½persistent" and "ignorehitpause"
 	if( tok.CheckToken("persistent") )
 	{
 		if( !tok.CheckToken("=") )
@@ -795,7 +795,7 @@ bool CStateParser::ParseStateBaseParm(CTokenizer &tok,CStateManager &StateManage
 		EvaluateExpression(tok,StateManager);
 		StateManager.SetPersistent();
 		return true;
-		// ÉèÖÃµ±Ç°stateµÄ²ÎÊý
+		// ï¿½ï¿½ï¿½Ãµï¿½Ç°stateï¿½Ä²ï¿½ï¿½ï¿½
 	}else if( tok.CheckToken("ignorehitpause") )
 	{
 		if( !tok.CheckToken("=") )
@@ -814,13 +814,13 @@ void CStateParser::ParseNormalAction(CTokenizer &tok,CStateManager &StateManager
 {
 	//CHANGESTATE *temp=(CHANGESTATE*) m_pAlloc->Alloc(sizeof(CHANGESTATE));
 	//TODO:Check for Required parameters and print error msg
-	// ²»ÄÜ³Ôµôtoken£¬·ñÔòÏÂ¸östate¾ÍÎÞ·¨Æ¥Åä£¬"["»áÊ×ÏÈ±»³Ôµô
+	// ï¿½ï¿½ï¿½Ü³Ôµï¿½tokenï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¸ï¿½stateï¿½ï¿½ï¿½Þ·ï¿½Æ¥ï¿½ä£¬"["ï¿½ï¿½ï¿½ï¿½ï¿½È±ï¿½ï¿½Ôµï¿½
 	while( !tok.CheckToken("[", false) && !tok.AtEndOfFile() )
 	{
 		StateManager.NewInst();
 		if (ParseStateBaseParm(tok,StateManager))
 		{
-			// Èç¹ûÊÇ»ù±¾²ÎÊý¾Í¼ÌÐø£»
+			// ï¿½ï¿½ï¿½ï¿½Ç»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½
 			continue;
 		}
 
@@ -830,7 +830,7 @@ void CStateParser::ParseNormalAction(CTokenizer &tok,CStateManager &StateManager
 				Error("expected =",tok);  
 
 			EvaluateExpression(tok,StateManager);
-			// ÉèÖÃµ±Ç°stateµÄ²ÎÊý
+			// ï¿½ï¿½ï¿½Ãµï¿½Ç°stateï¿½Ä²ï¿½ï¿½ï¿½
 			StateManager.SetParam(CPN_value);
 		}else if( tok.CheckToken("ctrl") )
 		{
@@ -884,7 +884,7 @@ void CStateParser::ParseChangeState(CTokenizer &tok,CStateManager &StateManager)
 		StateManager.NewInst();
 		if (ParseStateBaseParm(tok,StateManager))
 		{
-			// Èç¹ûÊÇ»ù±¾²ÎÊý¾Í¼ÌÐø£»
+			// ï¿½ï¿½ï¿½ï¿½Ç»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½
 			continue;
 		}
 
@@ -894,7 +894,7 @@ void CStateParser::ParseChangeState(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);  
 
 			EvaluateExpression(tok,StateManager);
-			// ÉèÖÃµ±Ç°stateµÄ²ÎÊý
+			// ï¿½ï¿½ï¿½Ãµï¿½Ç°stateï¿½Ä²ï¿½ï¿½ï¿½
 			StateManager.SetParam(CPN_value);
 		}else if( tok.CheckToken("ctrl") )
 		{
@@ -925,7 +925,7 @@ void CStateParser::ParseChangeAnim(CTokenizer &tok,CStateManager &StateManager)
 		StateManager.NewInst();
 		if (ParseStateBaseParm(tok,StateManager))
 		{
-			// Èç¹ûÊÇ»ù±¾²ÎÊý¾Í¼ÌÐø£»
+			// ï¿½ï¿½ï¿½ï¿½Ç»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½
 			continue;
 		}
 
@@ -935,7 +935,7 @@ void CStateParser::ParseChangeAnim(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);  
 
 			EvaluateExpression(tok,StateManager);
-			// ÉèÖÃµ±Ç°stateµÄ²ÎÊý
+			// ï¿½ï¿½ï¿½Ãµï¿½Ç°stateï¿½Ä²ï¿½ï¿½ï¿½
 			StateManager.SetParam(CPN_value);
 		}else if( tok.CheckToken("ctrl") )
 		{
@@ -976,7 +976,7 @@ void CStateParser::ParseHitDef(CTokenizer &tok,CStateManager &StateManager)
 				Error("expected =",tok);  
 
 			EvaluateExpression(tok,StateManager);
-			// ÉèÖÃµ±Ç°stateµÄ²ÎÊý
+			// ï¿½ï¿½ï¿½Ãµï¿½Ç°stateï¿½Ä²ï¿½ï¿½ï¿½
 			StateManager.SetHDParam(CHD_attr);
 		}
 		PARSE_HITDEF_PARAM(hitflag)

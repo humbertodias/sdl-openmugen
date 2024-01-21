@@ -366,7 +366,7 @@ bool CTokenizer::CheckToken( const char* stringToLookFor, bool consumeIfMatch )
             return false;
     }
         
-    bool result = m_IsCaseSensitive ? ( strcmp( stringToLookFor, m_Buffer ) == 0 ) : ( strcmpi( stringToLookFor, m_Buffer ) == 0 ); 
+    bool result = m_IsCaseSensitive ? ( strcmp( stringToLookFor, m_Buffer ) == 0 ) : ( strcasecmp( stringToLookFor, m_Buffer ) == 0 ); 
     m_BufferIsNextToken = consumeIfMatch ? !result : true;
     return result;    
 }
