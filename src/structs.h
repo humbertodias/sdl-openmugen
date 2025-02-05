@@ -2,12 +2,12 @@
 #define __STRUCTS__H
 
 //typedefs
-typedef unsigned char   u8;
-typedef signed   char   s8;
-typedef unsigned short  u16;
-typedef signed   short  s16;
-typedef uint32_t   		u32;
-typedef int32_t   		s32;
+typedef unsigned char   u8;   // 8-bit unsigned type
+typedef signed   char    s8;  // 8-bit signed type
+typedef unsigned short  u16;  // 16-bit unsigned type
+typedef signed   short  s16;  // 16-bit signed type
+typedef uint32_t        u32;  // 32-bit unsigned type
+typedef int32_t         s32;  // 32-bit signed type
 
 
 typedef unsigned char BYTE;
