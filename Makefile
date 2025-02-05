@@ -1,3 +1,5 @@
+.PHONY: build
+
 BUILD_TYPE=Debug
 build:
 	cmake -Bbuild -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
