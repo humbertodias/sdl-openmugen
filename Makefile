@@ -5,3 +5,6 @@ build:
 
 run:
 	./build/OpenMugen
+
+clean:
+	rm -rf build
