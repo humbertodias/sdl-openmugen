@@ -21,7 +21,7 @@
 //    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #ifndef STATEMANAGER_H 
-#define STAGEMANAGER_H
+#define STATEMANAGER_H
 
 
 #define S_type					2
@@ -80,7 +80,7 @@ public:
 	
 	void SetVelSet(float x,float y);
     void NewInst(){nCurrInst=0;}
-	// stateÉèÖÃ²ÎÊý
+	// stateï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½
 	void SetParam(ConParmName nParam);
 	void SetHDParam(CONTROLHITDEFParmName nParam);
 	void SetPersistent();
