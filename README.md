@@ -9,7 +9,7 @@ sudo apt install libsdl1.2-dev libsdl-image1.2-dev
 ```
 Build
 ```shell
-cmake -Bbuild
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug
 cmake --build build
 ```
 Run
