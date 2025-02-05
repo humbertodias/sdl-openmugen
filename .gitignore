@@ -24,7 +24,6 @@ log.txt
 /cmake_install.cmake
 /CMakeFiles/
 cmake-build-debug
-Makefile
 /OpenMugen
 
 .idea
