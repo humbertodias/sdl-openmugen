@@ -12,17 +12,12 @@ add_executable(${PROJECT} ${SOURCE_FILES})
 set_property(TARGET ${PROJECT} PROPERTY CXX_STANDARD 98)
 set_property(TARGET ${PROJECT} PROPERTY CXX_STANDARD_REQUIRED 98)
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings")
-
 message("CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}
 CMAKE_CXX_COMPILER_VERSION: ${CMAKE_CXX_COMPILER_VERSION}")
 
-# gcc 5 and clang 3.4 at least to support c++14
-if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.4)
-    message(FATAL_ERROR "Require at least clang++-3.4")
-endif ()
-if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.1)
-    message(FATAL_ERROR "Require at least g++-5.1")
+if (CMAKE_BUILD_TYPE MATCHES Debug)
+    add_definitions("-g -O0 -Wall -Wextra -Wpedantic -fsanitize=address")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
 endif ()
 
 # Find SDL
