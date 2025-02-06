@@ -394,7 +394,8 @@ void CStateManager::CleanUp()
 //Add Instruction to currrent trigger
 void CStateManager::AddInstruction(Uint16 nOpCode,float value,const char *strValue)
 {
-	PrintMessage("AddInstruction = command:%s value:%f str:%s",strOpCode[nOpCode],value,(char *)strValue,nOpCode);
+	// TODO: Review global-overflow
+	// PrintMessage("AddInstruction = command:%s value:%f str:%s",strOpCode[nOpCode],value,(char *)strValue,nOpCode);
 
 	pInst[nCurrInst].n_OpCode=nOpCode;
 	pInst[nCurrInst].Value=value;
