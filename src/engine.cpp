@@ -21,7 +21,7 @@ CEngine::~CEngine()
 
 /*
 ================================================================================
-Init the engine clall the function once at the start
+Init the engine call the function once at the start
 of OpenMugen
 ================================================================================
 */
@@ -55,7 +55,7 @@ void CEngine::InitEngine(CMemManager *m,CVideoSystem *v,CGameTimer *t)
     player2.SetVM(m_pVMp2);
     
     
-    /*Set the gournd limit of the player 
+    /*Set the ground limit of the player
      This value should be read out the stage def*/
     player1.SetGroundValue(220);
     player2.SetGroundValue(220);
@@ -78,8 +78,8 @@ void CEngine::InitEngine(CMemManager *m,CVideoSystem *v,CGameTimer *t)
 }
 /*
 ================================================================================
-Upates all the engine members and draw them to the screen
-Handels also AI and player movement
+Updates all the engine members and draw them to the screen
+Handles also AI and player movement
 ================================================================================
 */
 void CEngine::RunEngine()
