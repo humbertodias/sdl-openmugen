@@ -8,7 +8,7 @@ class CAllocater
    size_t  nAllocSize = 0;
    size_t  nAllocNumber = 0;
    size_t  nMemListSize = 0;
-   MEMLIST *lpMemList = nullptr;
+   MEMLIST *lpMemList = NULL;
    bool bFree;
    
 enum { FREE=0x00,
