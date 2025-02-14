@@ -79,7 +79,6 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 endif ()
 
 target_link_libraries(${PROJECT}
-    -liconv
     ${EXTERNAL_INSTALL_DIR}/lib/libSDL2.a
     ${EXTERNAL_INSTALL_DIR}/lib/libSDL2_image.a
     ${EXTERNAL_INSTALL_DIR}/lib/libSDL2_gfx.a
