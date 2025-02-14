@@ -81,7 +81,7 @@ void CGame::RunGame()
        //switch to the current Subsystem
        switch(nGameType)
        {
-          //We running the Fight engine
+          //We are running the Fight engine
           case GFIGHTGAME:
                m_FightEngine.RunEngine();
           break;

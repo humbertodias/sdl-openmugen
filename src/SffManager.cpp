@@ -24,7 +24,7 @@ void CSffManager::SetPointers(CVideoSystem* p,CAllocater* a,CGameTimer *t,CAirMa
      m_pAirManger=air;
 }
 
-//reste the class variables
+//reset the class variables
 void CSffManager::ResetManager()
 {
      bPalletLoaded=false;
@@ -38,7 +38,7 @@ void CSffManager::ResetManager()
      
 }
 
-//load and deccode the SFF sprite and store it in a array
+//load and decode the SFF sprite and store it in a array
 bool CSffManager::LoadSffFile(const char *strSffFile)
 {
   SFFHEADER header;   
@@ -56,7 +56,7 @@ bool CSffManager::LoadSffFile(const char *strSffFile)
   //read the header of the file
   fread(&header,sizeof(header),1,lpSffFile);
   
-  //check file signatur
+  //check file signature
   if(strcmp((char*)header.signature,"ElecbyteSpr")!=0)
   {
     PrintMessage("CSffManager::%s is not an SFF file",strSffFile);
@@ -116,7 +116,7 @@ void CSffManager::BlitSprite(s16 nGroupNumber,s16 nImageNumber,s16 x, s16 y)
      if(i==-1)
         return;
         
-    //normal blit with with masked bits
+    //normal blit with masked bits
     if(nFlags==BLT_NORMAL)
        m_pVideoSystem->NormalBlt(&lpSpriteList[i],x,y,false);
     

@@ -19,7 +19,7 @@ private:
   u16            nFlags;
   //Sprite list 
   SFFSPRITE*      lpSpriteList;
-  //decode the PCX file by run lenght 
+  //decode the PCX file by run length
   u8* DecodePcx(u8* PcxByte,PCXHEADER header);
   int FindSprite(s16 nGroupNumber,s16 nImageNumber);
   void DecodeSffFile();
