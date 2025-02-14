@@ -47,14 +47,27 @@ CVideoSystem::~CVideoSystem()
 
 void CVideoSystem::CleanUp()
 {
-   //SDL_FreeSurface(work);
-   //SDL_FreeSurface(screen); 
-   //SDL_FreeSurface(font);
+    // Free textures instead of surfaces (if these are SDL_Texture objects)
+    if (work != NULL) {
+        SDL_DestroyTexture(work);
+        work = NULL;
+    }
+
+    if (window != NULL) {
+        SDL_DestroyWindow(window);  // Assuming window is an SDL_Texture
+        window = NULL;
+    }
+
+    if (font != NULL) {
+        SDL_FreeSurface(font);  // Assuming font is an SDL_Texture
+        font = NULL;
+    }
 }
 
 bool CVideoSystem::InitSystem()
 {
     PrintMessage("CVideoSystem::InitSystem()");
+
 
     // Create SDL2 window
     window = SDL_CreateWindow(OMTITLE,
@@ -63,24 +76,31 @@ bool CVideoSystem::InitSystem()
 
     if (window == NULL)
     {
+        printf("Error: SDL_CreateWindow failed: %s\n", SDL_GetError());
         throw CError("SDL_CreateWindow Failed");
         return false;
     }
 
+
     //Set the icon for the application
     // SDL_WM_SetIcon(SDL_LoadBMP("icon.bmp"), NULL);
     // TODO: SDL2
-    SDL_Surface* icon = SDL_LoadBMP("icon.bmp");
-    if (icon != NULL) {
-        SDL_SetWindowIcon(window, icon);
-        SDL_FreeSurface(icon);  // Libere a superfície após usá-la
+    SDL_Surface* icon = SDL_LoadBMP("data/icon.bmp");
+    if (icon == NULL)
+    {
+        printf("Error: SDL_LoadBMP failed: %s\n", SDL_GetError());
+        throw CError("SDL_LoadBMP Failed");
+        return false;
     }
+    SDL_SetWindowIcon(window, icon);
+    SDL_FreeSurface(icon);
 
 
     // Create SDL2 renderer
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == NULL)
     {
+        printf("Error: SDL_CreateRenderer failed: %s\n", SDL_GetError());
         throw CError("SDL_CreateRenderer Failed");
         return false;
     }
@@ -89,6 +109,7 @@ bool CVideoSystem::InitSystem()
     work = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 320, 240);
     if (work == NULL)
     {
+        printf("Error: SDL_CreateTexture failed: %s\n", SDL_GetError());
         throw CError("SDL_CreateTexture Failed");
         return false;
     }
@@ -187,16 +208,16 @@ void CVideoSystem::Draw()
         nFps=(float)nFpsCount*1000 / (nowTime-lastTime);
         nFpsCount=0;
         lastTime=nowTime;
-    
+
     }
     DrawText(0,0,"%2.2f FPS",nFps);
-         
+
     //FilterImage();
-    
+
     //scale2x(work,screen);
-    
+
     // SDL_BlitSurface(work,NULL,screen,NULL);
-    
+
     SDL_RenderCopy(renderer, work, NULL, NULL);
     SDL_RenderPresent(renderer);
 
@@ -205,13 +226,13 @@ void CVideoSystem::Draw()
     // TODO: SDL2
     SDL_RenderPresent(renderer);
 
-    
+
      //Limit the frame rate to 60 Hz
     SDL_framerateDelay(&m_FPSmanager);
-    
+
     nFpsCount++;
-    
-   
+
+
 }
 
 //this is the MMX version of Scale2x only uses this if we have a CPU with MMX support
@@ -379,66 +400,57 @@ void CVideoSystem::NormalBlt(SFFSPRITE *lpSprite,s16 x,s16 y,bool bMask)
      s16 height=lpSprite->PcxHeader.height;
      u8* byData=lpSprite->byPcxFile;
      u16 *ColorTable=lpSprite->ColorPallet;
-     
+
      //calculate x and y value
      y-=height-(height-lpSprite->y);
      x-=width-(width-lpSprite->x);
-     
+
+    //TODO: review sdl2
      // lpWorkData=(u16*)work->pixels;
      // pitch=work->pitch/2;
 
-    void* tempPixels;
-    int tempPitch;
-
-    if (SDL_LockTexture(work, NULL, &tempPixels, &tempPitch) == 0) {
-        lpWorkData = (uint16_t*)tempPixels;  // Cast to 16-bit
-        pitch = tempPitch / 2;  // Convert pitch from bytes to 16-bit words
-        SDL_UnlockTexture(work);
-    } else {
-        PrintMessage("Failed to lock texture: %s", SDL_GetError());
-    }
 
      u16 yClip=0;
      u16 yClip2=0;
      u16 xClip=0;
      u16 xClip2=0;
-        
-     
+
+
      if( x+width > XMAX)
      {
-       width-=  x+width - XMAX;  
+       width-=  x+width - XMAX;
      }
-  
+
      if( x<0 )
      {
          xClip=-x;
          x=0;
      }
-    
-    
+
+
      if(y+height >YMAX)
         height-=y+height - YMAX;
-    
+
      if(y<0)
      {
         yClip=-y;
-        y=0;           
+        y=0;
      }
-    
+
      lpWorkData+=y*pitch;
      lpWorkData+=x;
-    
+
     if(!bMask)
     {
-              
+
          for(int i=yClip;i<height;i++)
          {
-      
+
             for(int j=xClip;j<width;j++)
             {
-              *lpWorkData=ColorTable[byData[j + i*lpSprite->PcxHeader.widht]];               
+              *lpWorkData=ColorTable[byData[j + i*lpSprite->PcxHeader.widht]];
                lpWorkData++;
-               
+
              }
              lpWorkData-=width-xClip;
              lpWorkData+=pitch;
@@ -450,20 +462,20 @@ void CVideoSystem::NormalBlt(SFFSPRITE *lpSprite,s16 x,s16 y,bool bMask)
      {
          for(int i=yClip;i<height;i++)
          {
-      
+
             for(int j=xClip;j<width;j++)
             {
-              if(byData[j + i*lpSprite->PcxHeader.widht] != byData[0])      
-              *lpWorkData=ColorTable[byData[j + i*lpSprite->PcxHeader.widht]];               
+              if(byData[j + i*lpSprite->PcxHeader.widht] != byData[0])
+              *lpWorkData=ColorTable[byData[j + i*lpSprite->PcxHeader.widht]];
                lpWorkData++;
-               
+
              }
              lpWorkData-=width-xClip;
              lpWorkData+=pitch;
 
           }
-         
-         
+
+
      }
 
 }
@@ -481,22 +493,12 @@ void CVideoSystem::NormalFlipH(SFFSPRITE *lpSprite,s16 x,s16 y,bool bMask)
      //calculate x and y value
      y-=height-(height-lpSprite->y);
      x-=width-lpSprite->x;
-     
+
+    //TODO: review sdl2
+
      // lpWorkData=(u16*)work->pixels;
      // pitch=work->pitch/2;
 
-    void* tempPixels;
-    int tempPitch;
-
-    if (SDL_LockTexture(work, NULL, &tempPixels, &tempPitch) == 0) {
-        lpWorkData = (uint16_t*)tempPixels;  // Cast to 16-bit
-        pitch = tempPitch / 2;  // Convert pitch from bytes to 16-bit words
-        SDL_UnlockTexture(work);
-    } else {
-        PrintMessage("Failed to lock texture: %s", SDL_GetError());
-    }
-
-     
      u16 yClip=0;
      u16 yClip2=0;
      u16 xClip=0;
