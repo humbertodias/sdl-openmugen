@@ -3,29 +3,38 @@
 FILE *pLogFile=NULL;
 
 
-void PrintMessage(char *str,...)
-{
-  char string[255];                  // Temporary string
+void PrintMessage(char *str, ...) {
+  char string[255];  // Temporary string
+  va_list ap;        // Pointer to list of arguments
 
-//  va_list ap;                // Pointer To List Of Arguments
-//  va_start(ap, str);         // Parses The String For Variables
-//  vsprintf(string, str, ap); // Converts Symbols To Actual Numbers
-//  va_end(ap);
-  
+  // Initialize the argument list
+  va_start(ap, str);
+
+  // Fill the string with the arguments
+  vsnprintf(string, sizeof(string), str, ap);
+
+  // End the argument list
+  va_end(ap);
+
 #ifdef _XBOX
-  pLogFile=fopen("d:\\log.txt","a+");
+  pLogFile = fopen("d:\\log.txt", "a+");
 #else
-  pLogFile=fopen("log.txt","a+");
+  pLogFile = fopen("log.txt", "a+");
 #endif
 
-  fprintf(pLogFile,string);
-  fprintf(pLogFile,"\n");
-  fclose(pLogFile);
+  if (pLogFile != NULL) {
+    // Write the message to the log file
+    fprintf(pLogFile, "%s", string);
+    fprintf(pLogFile, "\n");
+    fclose(pLogFile);
+  } else {
+    // If the log file could not be opened
+    printf("Failed to open log file.\n");
+  }
 
-
-  printf(string);
+  // Print the message to the console
+  printf("%s", string);
   printf("\n");
-
 }
 
 
