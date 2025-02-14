@@ -202,7 +202,10 @@ void CPlayer::UpDatePlayer()
 {
 //	CInput::ProcessInput(m_keyData);
 
-	Uint8 *keystate = SDL_GetKeyState(NULL);
+	// Uint8 *keystate = SDL_GetKeyState(NULL);
+// TODO SDL2
+const Uint8 *keystate = SDL_GetKeyboardState(NULL);
+
 
 	//Process keyboard input
 	if( m_keyData->bKeyBoard )

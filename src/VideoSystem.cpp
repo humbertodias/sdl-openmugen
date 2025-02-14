@@ -30,8 +30,9 @@ CVideoSystem::CVideoSystem()
     work=screen=NULL;
     nowTime=lastTime=0;
     nFpsCount=0;
-    
+    renderer = NULL;
      
+    
 }
 //Destructor
 CVideoSystem::~CVideoSystem()
@@ -52,7 +53,7 @@ bool CVideoSystem::InitSystem()
 {
     PrintMessage("CVideoSystem::InitSystem()");
      //Set Video mode and get main Surface   
-    screen=SDL_SetVideoMode(320,240,16,SDL_SWSURFACE|SDL_DOUBLEBUF);
+    // screen=SDL_SetVideoMode(320,240,16,SDL_SWSURFACE|SDL_DOUBLEBUF);
     //Check the surface for validate
     if(screen==NULL)
     {
@@ -61,7 +62,15 @@ bool CVideoSystem::InitSystem()
        
     }
     //OpenMugen Titel
-    SDL_WM_SetCaption(OMTITLE,NULL);
+    // SDL_WM_SetCaption(OMTITLE,NULL);
+
+    // TODO: SDL2
+    SDL_Window* window = SDL_CreateWindow(OMTITLE, 
+      SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+      320,240, SDL_WINDOW_SHOWN);
+  
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    
     
     //Create the work surface
     work=CreateSurface(320,240);
@@ -101,7 +110,9 @@ void CVideoSystem::LoadFont()
         i++;    
     }
     
-    SDL_SetColorKey(font,SDL_SRCCOLORKEY,SDL_MapRGB(screen->format,0,0,0));
+    // SDL_SetColorKey(font,SDL_SRCCOLORKEY,SDL_MapRGB(screen->format,0,0,0));
+
+    SDL_SetColorKey(font, SDL_TRUE, SDL_MapRGB(screen->format, 0, 0, 0));
 
 }
 
@@ -136,7 +147,11 @@ void CVideoSystem::Draw()
     
     SDL_BlitSurface(work,NULL,screen,NULL);
     
-    SDL_Flip(screen);
+
+    // SDL_Flip(screen);
+    // TODO: SDL2
+    SDL_RenderPresent(renderer);
+
     
      //Limit the frame rate to 60 Hz
     SDL_framerateDelay(&m_FPSmanager);

@@ -35,7 +35,9 @@ CInput::~CInput()
 //Process InputData
 void CInput::ProcessInput(KEYBOARDDATA *lpKeyBoard)
 {
-    Uint8 *keystate = SDL_GetKeyState(NULL);
+    // Uint8 *keystate = SDL_GetKeyState(NULL);
+    const Uint8 *keystate = SDL_GetKeyboardState(NULL);
+
     
     //Process keyboard input
     if( lpKeyBoard->bKeyBoard )

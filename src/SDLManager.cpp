@@ -46,10 +46,25 @@ bool CSDLManager::Init()
         PrintMessage("SDL error=%s",SDL_GetError());
         return false;
     }
+
+
+
     PrintMessage("CSDLManager:: SDL_Init OK");
-    //Set the icon for the application
-    SDL_WM_SetIcon(SDL_LoadBMP("icon.bmp"), NULL);
+    // TODO: SDL2
+    SDL_Window* window = SDL_CreateWindow("OpenMugen", 
+        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        640, 480, SDL_WINDOW_SHOWN);
+
     
+    //Set the icon for the application
+    // SDL_WM_SetIcon(SDL_LoadBMP("icon.bmp"), NULL);
+    // TODO: SDL2
+    SDL_Surface* icon = SDL_LoadBMP("icon.bmp");
+    if (icon != NULL) {
+        SDL_SetWindowIcon(window, icon);
+        SDL_FreeSurface(icon);  // Libere a superfície após usá-la
+    }
+
     //Now init ouer Video System
     if(!m_VideoSystem.InitSystem())
     {

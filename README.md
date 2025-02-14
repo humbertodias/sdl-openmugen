@@ -7,17 +7,17 @@ Open source King of Fighters code
 
 
 ### Requisites
-* sdl1.2
-* sdl-image
-* sdl-gfx
+* sdl2
+* sdl2-image
+* sdl2-gfx
 
 Ubuntu
 ```shell
-sudo apt install libsdl1.2-dev libsdl-image1.2-dev libsdl-gfx1.2-dev
+sudo apt install -y libsdl2-dev libsdl-image2-dev libsdl-gfx2-dev
 ```
 Build
 ```shell
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 cmake --build build
 ```
 Run

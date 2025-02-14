@@ -22,6 +22,7 @@
 
 #ifndef VIDEO_H
 #define VIDEO_H
+#include "SDL_image.h"
 
 const int SCREENX_LIMIT = 319;
 const int SCREENY_LIMIT = 239;
@@ -71,7 +72,7 @@ private:
     float nFps;
     FPSmanager m_FPSmanager;
     MUGENFONT my_Fonts[255];
-   
+    SDL_Renderer *renderer;
                 
 };
 
