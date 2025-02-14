@@ -38,7 +38,9 @@ public:
     
 bool InitSystem();
 void CleanUp();
-SDL_Surface* CreateSurface(int x,int y);
+// SDL_Surface* CreateSurface(int x,int y);
+SDL_Texture* CreateTexture(int x,int y);
+
 void Draw();
 void Clear();
 void DrawRect(Sint16 x,Sint16 y,Sint16 w,Sint16 h,Uint8 R,Uint8 G,Uint8 B);
@@ -62,8 +64,8 @@ void NormalFlipHV(SFFSPRITE *lpSprite,s16 x,s16 y,bool bMask);
 
     
 private:
-    SDL_Surface *screen;
-    SDL_Surface *work;
+    // SDL_Surface *screen;
+    // SDL_Surface *work;
     SDL_Surface *font;
     
     Uint8* deltaPtr;
@@ -72,7 +74,9 @@ private:
     float nFps;
     FPSmanager m_FPSmanager;
     MUGENFONT my_Fonts[255];
+    SDL_Window *window;
     SDL_Renderer *renderer;
+    SDL_Texture *work;
                 
 };
 
