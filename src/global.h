@@ -10,7 +10,7 @@
 //SDL_GFX libery
 
 
-//standart include
+//standard include
 #include <memory.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <stdarg.h>  // For va_list, va_start, va_end
 
 #ifdef __linux__
 #define strcmpi strcasecmp
