@@ -29,7 +29,7 @@ jobs:
         run: sudo apt update -y && sudo apt install -y libsdl2-dev libsdl-image1.2-dev libsdl-gfx1.2-dev libsdl1.2-compat build-essential cmake make
 
       - name: Build tar.gz
-        run: make clean targaz/data build targz/openmugen
+        run: make clean targz/data build targz/openmugen
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -52,7 +52,7 @@ jobs:
         run: brew install sdl2 sdl2_image sdl2_gfx sdl12-compat cmake make
 
       - name: Build tar.gz
-        run: make clean targaz/data build targz/openmugen
+        run: make clean targz/data build targz/openmugen
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
