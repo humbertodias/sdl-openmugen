@@ -7,6 +7,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
 # required for upload
 permissions:
   contents: write
@@ -21,8 +25,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install
-        run: apt install -y libsdl2-dev libsdl-image1.2-dev libsdl-gfx1.2-dev libsdl1.2-compat build-essential cmake make
+      - name: Install dependencies
+        run: sudo apt update -y && sudo apt install -y libsdl2-dev libsdl-image1.2-dev libsdl-gfx1.2-dev libsdl1.2-compat build-essential cmake make
 
       - name: Build tar.gz
         run: make clean targaz/data build targz/openmugen
