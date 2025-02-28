@@ -20,7 +20,6 @@ if (CMAKE_BUILD_TYPE MATCHES Debug)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
 endif ()
 
-
 # Ensure compiler compatibility
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.4)
     message(FATAL_ERROR "Require at least clang++-3.4")

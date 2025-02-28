@@ -1,3 +1,6 @@
+OS   := $(shell uname -s)
+ARCH := $(shell uname -m)
+
 .PHONY: build
 
 BUILD_TYPE=Debug
@@ -10,4 +13,10 @@ run:
 	./build/OpenMugen
 
 clean:
-	rm -rf build
+	rm -rf build *.tar.gz
+
+targz/openmugen:
+	tar -czvf OpenMugen-${OS}-${ARCH}.tar.gz -C build OpenMugen
+
+targz/data:
+	tar -czvf data.tar.gz data
