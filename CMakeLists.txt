@@ -2,15 +2,15 @@ cmake_minimum_required(VERSION 3.7)
 set(PROJECT OpenMugen)
 project(${PROJECT})
 
-
 # Add global definitions
 add_definitions("-Wall")
 file(GLOB_RECURSE SOURCE_FILES "src/*.cpp")
 
 add_executable(${PROJECT} ${SOURCE_FILES})
-# Using C++14
 set_property(TARGET ${PROJECT} PROPERTY CXX_STANDARD 98)
 set_property(TARGET ${PROJECT} PROPERTY CXX_STANDARD_REQUIRED 98)
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings")
 
 message("CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}
 CMAKE_CXX_COMPILER_VERSION: ${CMAKE_CXX_COMPILER_VERSION}")
@@ -20,19 +20,46 @@ if (CMAKE_BUILD_TYPE MATCHES Debug)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
 endif ()
 
-# Find SDL
-# https://cmake.org/cmake/help/latest/module/FindPkgConfig.html
-INCLUDE(FindPkgConfig REQUIRED)
-PKG_CHECK_MODULES(SDL REQUIRED sdl)
-PKG_CHECK_MODULES(SDL_IMAGE REQUIRED SDL_image)
-PKG_CHECK_MODULES(SDL_GFX REQUIRED SDL_gfx)
 
-message("SDL_INCLUDE_DIRS: ${SDL_INCLUDE_DIRS}
-SDL_IMAGE_INCLUDE_DIRS: ${SDL_IMAGE_INCLUDE_DIRS}
-SDL_GFX_INCLUDE_DIRS: ${SDL_GFX_INCLUDE_DIRS}")
-include_directories(${SDL_INCLUDE_DIRS} ${SDL_IMAGE_INCLUDE_DIRS} ${SDL_GFX_INCLUDE_DIRS})
+# Ensure compiler compatibility
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.4)
+    message(FATAL_ERROR "Require at least clang++-3.4")
+endif ()
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.1)
+    message(FATAL_ERROR "Require at least g++-5.1")
+endif ()
 
-message("SDL_LINK_LIBRARIES: ${SDL_LINK_LIBRARIES}
-SDL_IMAGE_LINK_LIBRARIES: ${SDL_IMAGE_LINK_LIBRARIES}
-SDL_GFX_LINK_LIBRARIES: ${SDL_GFX_LINK_LIBRARIES}")
-target_link_libraries(${PROJECT} ${SDL_LINK_LIBRARIES} ${SDL_IMAGE_LINK_LIBRARIES} ${SDL_GFX_LINK_LIBRARIES})
+# Find SDL12_Compat, SDL_image, and SDL_gfx
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(SDL12 REQUIRED sdl12_compat)
+pkg_check_modules(SDL_IMAGE REQUIRED SDL_image)
+pkg_check_modules(SDL_GFX REQUIRED SDL_gfx)
+
+# Print debug info
+message("SDL12_INCLUDE_DIRS: ${SDL12_INCLUDE_DIRS}")
+message("SDL_IMAGE_INCLUDE_DIRS: ${SDL_IMAGE_INCLUDE_DIRS}")
+message("SDL_GFX_INCLUDE_DIRS: ${SDL_GFX_INCLUDE_DIRS}")
+
+message("SDL12_LIBRARIES: ${SDL12_LIBRARIES}")
+message("SDL_IMAGE_LIBRARIES: ${SDL_IMAGE_LIBRARIES}")
+message("SDL_GFX_LIBRARIES: ${SDL_GFX_LIBRARIES}")
+
+message("SDL12_LIBRARY_DIRS: ${SDL12_LIBRARY_DIRS}")
+message("SDL_IMAGE_LIBRARY_DIRS: ${SDL_IMAGE_LIBRARY_DIRS}")
+message("SDL_GFX_LIBRARY_DIRS: ${SDL_GFX_LIBRARY_DIRS}")
+
+# Include directories
+include_directories(${SDL12_INCLUDE_DIRS} ${SDL_IMAGE_INCLUDE_DIRS} ${SDL_GFX_INCLUDE_DIRS})
+link_directories(${SDL12_LIBRARY_DIRS} ${SDL_IMAGE_LIBRARY_DIRS} ${SDL_GFX_LIBRARY_DIRS})
+
+# Link libraries
+target_link_libraries(${PROJECT} -L${SDL12_LIBRARY_DIRS} -L${SDL_IMAGE_LIBRARY_DIRS} ${SDL_GFX_LIBRARY_DIRS} -lSDL -lSDL_image -lSDL_gfx)
+
+# macOS-specific settings
+if(APPLE)
+    find_library(COREFOUNDATION_FRAMEWORK CoreFoundation)
+    find_library(APPKIT_FRAMEWORK AppKit)
+    target_link_libraries(${PROJECT} ${COREFOUNDATION_FRAMEWORK} ${APPKIT_FRAMEWORK} -lSDLMain)
+endif()
+
+
