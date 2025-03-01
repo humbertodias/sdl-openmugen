@@ -10,4 +10,5 @@ if [ ! -d "$script_dir/data" ]; then
     unzip "$script_dir/data.zip" -d "$script_dir" && rm "$script_dir/data.zip"
 fi
 
+cd $script_dir
 ./OpenMugen

@@ -13,6 +13,7 @@ if (-not (Test-Path "$scriptDir\data")) {
     Remove-Item "$scriptDir\data.zip"
 }
 
+cd "$scriptDir"
 # Launch the application with the data directory argument
 Write-Host "Launching application..."
 Start-Process -FilePath $mainPath.FullName -ArgumentList "-d `"$scriptDir\data`""
