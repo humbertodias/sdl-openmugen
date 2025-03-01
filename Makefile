@@ -15,13 +15,24 @@ run:
 	./build/OpenMugen
 
 clean:
-	rm -rf build *.tar.gz
+	rm -rf build *.tar.gz data.zip
 
-targz/openmugen:
-	tar -czvf OpenMugen-${TAG_NAME}-${OS}-${ARCH}.tar.gz -C build OpenMugen
+copy-release-files:
+	echo "OS: ${OS}"
+ifeq ($(OS),Linux)
+	cp release/lin/* build/
+else ifeq ($(OS),Darwin)
+	cp release/mac/* build/
+else
+	echo "unknown"
+endif
+
+targz/openmugen:	copy-release-files
+	cd build && \
+	tar -czvf "../OpenMugen-${TAG_NAME}-${OS}-${ARCH}.tar.gz" OpenMugen launcher.*
 
 targz/data:
-	tar -czvf data.tar.gz data
+	zip -9 -r data.zip data
 
 ci:
 	docker build -t openmugen .
