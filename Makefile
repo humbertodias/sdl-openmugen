@@ -20,3 +20,7 @@ targz/openmugen:
 
 targz/data:
 	tar -czvf data.tar.gz data
+
+ci:
+	docker build -t openmugen .
+	docker run -v ${PWD}:/app -w /app openmugen sh -c "make clean build"

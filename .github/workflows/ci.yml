@@ -12,8 +12,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build Docker image
-        run: docker build -t openmugen .
-
       - name: Continuous Integration
-        run: docker run -v $PWD:/app -w /app openmugen sh -c "make clean build"
+        run: make ci
