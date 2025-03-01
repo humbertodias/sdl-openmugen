@@ -1,3 +1,7 @@
+[![CI](https://github.com/humbertodias/sdl-openmugen/actions/workflows/ci.yml/badge.svg)](https://github.com/humbertodias/sdl-openmugen/actions/workflows/ci.yml)
+[![CD](https://github.com/humbertodias/sdl-openmugen/actions/workflows/cd.yml/badge.svg)](https://github.com/humbertodias/sdl-openmugen/actions/workflows/cd.yml)
+![GitHub all releases](https://img.shields.io/github/downloads/humbertodias/sdl-openmugen/total)
+
 OpenMugen
 =========
 
