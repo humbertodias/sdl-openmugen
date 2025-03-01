@@ -1,8 +1,10 @@
 OS   := $(shell uname -s)
 ARCH := $(shell uname -m)
+# if there is no current tag use the git commit hash
+TAG_NAME := $(shell git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD)
+
 
 .PHONY: build
-
 BUILD_TYPE=Debug
 BUILD_TYPE=Release
 build:
@@ -16,7 +18,7 @@ clean:
 	rm -rf build *.tar.gz
 
 targz/openmugen:
-	tar -czvf OpenMugen-${OS}-${ARCH}.tar.gz -C build OpenMugen
+	tar -czvf OpenMugen-${TAG_NAME}-${OS}-${ARCH}.tar.gz -C build OpenMugen
 
 targz/data:
 	tar -czvf data.tar.gz data
