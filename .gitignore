@@ -27,5 +27,6 @@ cmake-build-debug
 /OpenMugen
 
 .idea
+.vscode
 build
 *.tar.gz
