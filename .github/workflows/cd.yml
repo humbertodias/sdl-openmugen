@@ -1,11 +1,8 @@
 name: CD
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+  release:
+    types: [ created ]
 
 defaults:
   run:
@@ -49,7 +46,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install
-        run: brew install sdl2 sdl2_image sdl2_gfx sdl12-compat cmake make
+        run: brew install sdl2 sdl_image sdl_gfx sdl12-compat cmake make
 
       - name: Build tar.gz
         run: make clean targz/data build targz/openmugen
