@@ -56,10 +56,11 @@ bool CSffManager::LoadSffFile(const char *strSffFile)
   //read the header of the file
   fread(&header,sizeof(header),1,lpSffFile);
   
-  //check file signatur
-  if(strcmp((char*)header.signature,"ElecbyteSpr")!=0)
+  //check file signature
+  char * signature = (char*)header.signature;
+  if (strncmp(signature, "ElecbyteSpr", sizeof(header.signature)) != 0)
   {
-    PrintMessage("CSffManager::%s is not an SFF file",strSffFile);
+    PrintMessage("CSffManager::%s is not an SFF file - signature:%s",strSffFile, signature);
     return false;                                           
                                                
   }
