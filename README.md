@@ -5,6 +5,12 @@ Open source King of Fighters code
 
 ![openmugen](https://github.com/user-attachments/assets/5df94bec-4126-4a3e-b138-b7d426504ed8)
 
+Controls
+
+| Player | Movement |  Punch  |  Kick   | 
+|:------:|:--------:|:-------:|:-------:|
+| **P1** |  `ad`  | `y u` | `h j` |
+| **P2** | `q` | `` | `` |
 
 ### Requisites
 * sdl2
